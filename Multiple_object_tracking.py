@@ -46,11 +46,18 @@ tracker = ask_for_tracker()
 
 tracker_name = str(tracker).split()[0][1:]
 
-rect_box = cv2.selectROI('Multitracker',frame)
-rects.append(rect_box)
-colors.append((randint(64,255)),(randint(64,255)),(randint(64,255)))
+rects=[]
+colors=[]
 
+print('Enter esc key after selecting the obejcts to track')
+while(True):
 
+	rect_box = cv2.selectROI('Multitracker',frame)
+	rects.append(rect_box)
+	colors.append((randint(64,255)),(randint(64,255)),(randint(64,255)))
+
+	if cv2.waitKey(0) and 0xFF == 27:
+		break
 multitracker = cv2.MultiTracker_create()
 
 for rect_box in rects:
