@@ -22,13 +22,27 @@ while(True):
 		hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
 		dest_roi = cv2.calcBackProject([hsv],[0],roi_hist,[0,180],1)
 
-		#_, track_window = cv2.meanShift(dest_roi,track_window,term_crit)
-		_, track_window = cv2.CamShift(dest_roi,track_window,term_crit)
+		"""
+		###########               MEANSHIFT                #############
+		_, track_window = cv2.meanShift(dest_roi,track_window,term_crit)
 
 		x,y,w,h = track_window
 
 		img2 = cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,0),3)
+		
+		"""
 
+		###########               CAMSHIFT                ##############
+
+		rect , _ = cv2.CamShift(dest_roi,track_window,term_crit)
+
+		pts=cv2.boxPoints(rect)
+		pts=np.int0(pts)
+
+		img2 = cv2.polylines(frame,[pts],True,(0,0,0),3)
+
+
+		###########      
 		cv2.imshow('Result',img2)
 
 
