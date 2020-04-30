@@ -49,6 +49,7 @@ tracker_name = str(tracker).split()[0][1:]
 rects=[]
 colors=[]
 
+cap = cv2.VideoCapture(0)
 print('Enter esc key after selecting the obejcts to track')
 while(True):
 
@@ -61,9 +62,7 @@ while(True):
 multitracker = cv2.MultiTracker_create()
 
 for rect_box in rects:
-	multitracker.add(tracker,
-					 frame,
-					 rect_box)
+	multitracker.add(tracker,frame, rect_box)
 
 
 while(cap.isOpened()):
